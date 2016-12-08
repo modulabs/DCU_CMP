@@ -111,25 +111,16 @@ while true
     % entries in the map, f, g and parent arrays
     %
 
-    neighbors = [];
-    if(i-1 >= 1)
-      neighbor = sub2ind(size(map), i-1, j);
-      neighbors (end + 1) = neighbor;
-    end
-    if(i+1 <= nrows)
-      neighbor = sub2ind(size(map), i+1, j);
-      neighbors (end + 1) = neighbor;
-    end
-    if(j-1 >= 1)
-      neighbor = sub2ind(size(map), i, j-1);
-      neighbors (end + 1) = neighbor;
-    end
-    if(j+1 <= ncols)
-      neighbor = sub2ind(size(map), i, j+1);
-      neighbors (end + 1) = neighbor;
-    end
+    neighbors = [i-1, j; i+1, j; i, j-1; i, j+1];
+    filter = (neighbors(:, 1) >= 1 &
+      neighbors(:, 1 ) <= nrows &
+      neighbors(:, 2) >= 1 &
+      neighbors(:, 2) <= ncols );
+    neighbors = neighbors(filter, :);
 
-    for neighbor = neighbors
+    for i=1:size(neighbors)(1)
+      neighbor = neighbors(i, :);
+      neighbor = sub2ind(size(map), neighbor(1), neighbor(2));
       if(map(neighbor) == 1 || map(neighbor) == 6)
         numExpanded = numExpanded + 1;
         map(neighbor) = 4;
