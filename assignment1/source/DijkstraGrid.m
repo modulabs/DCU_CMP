@@ -98,13 +98,10 @@ while true
     % and parent tables appropriately.
 
     neighbors = [i-1, j; i+1, j; i, j-1; i, j+1];
-    filter = (neighbors(:, 1) >= 1 &
-      neighbors(:, 1 ) <= nrows &
-      neighbors(:, 2) >= 1 &
-      neighbors(:, 2) <= ncols );
+    filter = (neighbors(:, 1) >= 1 & neighbors(:, 1 ) <= nrows & neighbors(:, 2) >= 1 & neighbors(:, 2) <= ncols );
     neighbors = neighbors(filter, :);
 
-    for i=1:size(neighbors)(1)
+    for i=1:(size(neighbors))(1)
       neighbor = neighbors(i, :);
       neighbor = sub2ind(size(map), neighbor(1), neighbor(2));
       if(map(neighbor) == 1 || map(neighbor) == 6)
